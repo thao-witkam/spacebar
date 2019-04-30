@@ -1,0 +1,12 @@
+httplug:
+  clients:
+      my_guzzle5:
+        factory: 'httplug.factory.guzzle5'
+        config:
+          defaults:
+            verify: false
+      my_guzzle6:
+        factory: 'httplug.factory.guzzle6'
+        config:
+          defaults:
+            verify: false
