@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ArticleRepository;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,15 +14,17 @@ class ArticleController extends AbstractController
     /**
      * @Route("/", name="app_homepage")
      */
-    public function homepage()
+    public function homepage(ArticleRepository $repository)
     {
-        return $this->render('article/homepage.html.twig');
+        $articles = $repository->findAllPublishedOrderByNewest();
+
+        return $this->render('article/homepage.html.twig', compact('articles'));
     }
 
     /**
      * @Route("/article/{slug}", name="article_show")
      */
-    public function show($slug, EntityManagerInterface $em)
+    public function show(Article $article)
     {
         $comments = [
             'I ate a normal rock once. It did NOT taste like bacon!',
@@ -30,16 +32,7 @@ class ArticleController extends AbstractController
             'I like bacon too! Buy some from my site! bakinsomebacon.com',
         ];
 
-        $repository = $em->getRepository(Article::class);
-        $article = $repository->findOneBy(['slug' => $slug]);
-        if(!$article){
-            throw $this->createNotFoundException(sprintf('No article found with slug=%s', $slug));
-        }
-
-        return $this->render('article/show.html.twig', [
-            'article' => $article,
-            'comments' => $comments,
-        ]);
+        return $this->render('article/show.html.twig', compact('article', 'comments'));
     }
 
     /**

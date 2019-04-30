@@ -50,6 +50,9 @@ class ArticleAdminController extends AbstractController
 EOF
             );
 
+        $article->setAuthor('Mike Ferengi')
+            ->setHeartCount(rand(5,50));
+
         if(rand(1, 10) > 2){
             $article->setPublishedAt(new \DateTime(sprintf('-%d days', rand(1,10))));
         }
