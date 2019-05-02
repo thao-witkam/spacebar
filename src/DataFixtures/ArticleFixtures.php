@@ -11,10 +11,9 @@ class ArticleFixtures extends BaseFixture
 
     protected function loadData(ObjectManager $manager)
     {
-        $this->createMany(Article::class, 10, function (Article $article, $count) {
+        $this->createMany(Article::class, 10, function (Article $article, $count) use ($manager) {
 
             $article->setTitle($this->faker->sentence)
-                ->setSlug($this->faker->slug)
                 ->setContent($this->faker->paragraph(rand(2,5)))
                 ->setAuthor($this->faker->name)
                 ->setHeartCount($this->faker->numberBetween(5, 100));
@@ -24,7 +23,6 @@ class ArticleFixtures extends BaseFixture
             if (rand(1, 10) > 2) {
                 $article->setPublishedAt($this->faker->dateTimeBetween('-30days'));
             }
-
         });
         $manager->flush();
     }
