@@ -59,7 +59,8 @@ class Article
     private $imageFilename;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article", orphanRemoval=true, fetch="EXTRA_LAZY")
+     * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $comments;
 
@@ -169,7 +170,7 @@ class Article
     }
 
     /**
-     * @return Collection|Comment[]
+     * @return Collection|Comment[
      */
     public function getComments(): Collection
     {
