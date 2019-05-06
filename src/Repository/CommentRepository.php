@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Comment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -19,32 +21,31 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
-    // /**
-    //  * @return Comment[] Returns an array of Comment objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    static function noneDeletedCriteria($orderBy = ['createdAt' => 'DESC'])
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return Criteria::create()
+            ->andWhere(Criteria::expr()->isNull('deletedAt'))
+            ->orderBy($orderBy);
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Comment
+    /**
+     * @param string $searchTerm
+     * @return \Doctrine\ORM\QueryBuilder
+     * @throws \Doctrine\ORM\Query\QueryException
+     */
+    public function getSearchQueryBuilder(string $searchTerm = null)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $qBuilder = $this->createQueryBuilder('c')
+            ->innerJoin('c.article', 'a')
+            ->addSelect('a')
+            ->addCriteria(self::noneDeletedCriteria());
+
+        if ($searchTerm !== null and !empty($searchTerm)) {
+            $qBuilder->andWhere('a.title LIKE :term OR a.content LIKE :term OR c.authorName LIKE :term OR c.content LIKE :term')
+                ->setParameter('term', "%{$searchTerm}%");
+        }
+
+        return $qBuilder;
     }
-    */
+
 }

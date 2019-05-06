@@ -7,6 +7,7 @@
         "ext-iconv": "*",
         "fzaninotto/faker": "^1.8",
         "knplabs/knp-markdown-bundle": "^1.7",
+        "knplabs/knp-paginator-bundle": "^3.0",
         "knplabs/knp-time-bundle": "^1.9",
         "nexylan/slack-bundle": "^2.1",
         "php-http/guzzle6-adapter": "^2.0",
@@ -18,12 +19,14 @@
         "symfony/debug-pack": "^1.0",
         "symfony/dotenv": "4.2.*",
         "symfony/flex": "^1.1",
+        "symfony/form": "4.2.*",
         "symfony/framework-bundle": "4.2.*",
         "symfony/maker-bundle": "^1.11",
         "symfony/orm-pack": "^1.0",
         "symfony/twig-bundle": "4.2.*",
         "symfony/web-server-bundle": "4.2.*",
-        "symfony/yaml": "4.2.*"
+        "symfony/yaml": "4.2.*",
+        "twig/extensions": "^1.5"
     },
     "config": {
         "preferred-install": {

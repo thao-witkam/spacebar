@@ -1,0 +1,42 @@
+{% extends 'content_base.html.twig' %}
+
+{% block title %}Hello CommentAdminController!{% endblock %}
+
+{% block content_body %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Manage Comments ({{ pagination.getTotalItemCount }})</h1>
+
+            <form>
+                <input type="text" class="col-sm-11" name="q" value="{{ app.request.query.get('q') }}" />
+                <button type="submit"><span class="fa fa-search"></span></button>
+            </form>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Article</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Comment</th>
+                    <th scope="col">Created</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for comment in pagination %}
+                    <tr>
+                        <td><a href="{{ path('article_show', {'slug' : comment.article.slug}) }}">{{ comment.article.title }}</a></td>
+                        <td>{{ comment.authorName }}</td>
+                        <td>{{ comment.content | truncate(50) }}</td>
+                        <td>{{ comment.createdAt | ago }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

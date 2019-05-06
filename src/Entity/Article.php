@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
+use App\Repository\ArticleRepository;
+use App\Repository\CommentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -170,11 +173,11 @@ class Article
     }
 
     /**
-     * @return Collection|Comment[
+     * @return Collection|Comment[]
      */
     public function getComments(): Collection
     {
-        return $this->comments;
+        return $this->comments->matching(CommentRepository::noneDeletedCriteria());
     }
 
     public function addComment(Comment $comment): self
