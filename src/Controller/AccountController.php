@@ -19,4 +19,14 @@ class AccountController extends AbstractController
         return $this->render('account/index.html.twig', [
         ]);
     }
+
+    /**
+     * @Route("/api/account", name="api_account")
+     */
+    public function accountApi()
+    {
+        return $this->json($this->getUser(), 200, [], [
+            'groups' => ['main']
+        ]);
+    }
 }
