@@ -24,6 +24,9 @@ class UserFixtures extends BaseFixture
             $user->setEmail($this->faker->email);
             $user->setFirstName($this->faker->name);
             $user->setPassword($this->passwordEncoder->encodePassword($user, 'test'));
+            if($this->faker->boolean){
+                $user->setTwitterUsername($this->faker->userName);
+            }
         });
 
         $manager->flush();
