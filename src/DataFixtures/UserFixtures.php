@@ -27,6 +27,10 @@ class UserFixtures extends BaseFixture
             if($this->faker->boolean){
                 $user->setTwitterUsername($this->faker->userName);
             }
+
+            if($this->faker->boolean(5)){
+                $user->setRoles(['ROLE_SUPER_ADMIN']);
+            }
         });
 
         $manager->flush();
