@@ -12,9 +12,9 @@ security:
                 property: email
 
     role_hierarchy:
-        ROLE_SUPER_ADMIN: [ROLE_ALLOWED_TO_SWITCH]
-        ROLE_ADMIN: [ROLE_ADMIN_COMMENT, ROLE_ADMIN_ARTICLE]
         ROLE_EDITOR: [ROLE_ADMIN_ARTICLE]
+        ROLE_ADMIN: [ROLE_ADMIN_COMMENT, ROLE_ADMIN_ARTICLE]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     firewalls:
         dev:
@@ -49,5 +49,5 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/admin, roles: ROLE_ADMIN }
+#         - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/profile, roles: ROLE_USER }

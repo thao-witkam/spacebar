@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Article;
 use App\Entity\Tag;
+use App\Entity\User;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -17,7 +18,7 @@ class ArticleFixtures extends BaseFixture implements DependentFixtureInterface
 
             $article->setTitle($this->faker->sentence)
                 ->setContent($this->faker->paragraph(rand(2,5)))
-                ->setAuthor($this->faker->name)
+                ->setAuthor($this->getRandomReference(User::class))
                 ->setHeartCount($this->faker->numberBetween(5, 100));
 
             $article->setImageFilename($this->faker->randomElement(self::$images));
@@ -43,6 +44,7 @@ class ArticleFixtures extends BaseFixture implements DependentFixtureInterface
     public function getDependencies()
     {
         return [
+            UserFixtures::class,
             TagFixtures::class
         ];
     }
