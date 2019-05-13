@@ -62,7 +62,6 @@ class UserToTextType extends AbstractType
         $attr['data-autocomplete-url'] = $this->route->generate('admin_utility_users');
 
         $view->vars['attr'] = $attr;
-
     }
 
 
