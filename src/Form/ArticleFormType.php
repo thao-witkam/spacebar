@@ -34,10 +34,10 @@ class ArticleFormType extends AbstractType
             ->add('author', UserToTextType::class, [
                 'finder_callback' => function(UserRepository $userRepository, $email){
                     $user = $userRepository->findOneBy(['email' => $email]);
-                    if($user->hasRole('ROLE_ADMIN_ARTICLE')){
-                        return $user;
-                    }
-                    return '';
+//                    if($user->hasRole('ROLE_ADMIN_ARTICLE')){
+//                        return $user;
+//                    }
+                    return $user;
                 }
             ])
 

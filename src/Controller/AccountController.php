@@ -25,7 +25,7 @@ class AccountController extends AbstractController
      */
     public function accountApi()
     {
-        return $this->json($this->getUser(), 200, [], [
+        return $this->json(['users' => $this->getUser()], 200, [], [
             'groups' => ['main']
         ]);
     }
