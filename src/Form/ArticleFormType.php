@@ -4,12 +4,9 @@ namespace App\Form;
 
 
 use App\Entity\Article;
-use App\Entity\User;
 use App\Repository\UserRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -30,10 +27,6 @@ class ArticleFormType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var Article|null $article */
-        $article = $options['data'] ?? null;
-        $location = ($article) ? $article->getLocation() : null;
-
         $builder
             ->add('title')
             ->add('content')
@@ -125,7 +118,7 @@ class ArticleFormType extends AbstractType
             'interstellar_space' => null
         ];
 
-        return $locationNameChoices[$location];
+        return $locationNameChoices[$location] ?? null;
     }
 
     public function configureOptions(OptionsResolver $resolver)
