@@ -7,6 +7,7 @@ use Psr\Container\ContainerInterface;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 class AppExtension extends AbstractExtension implements ServiceSubscriberInterface
 {
@@ -18,6 +19,13 @@ class AppExtension extends AbstractExtension implements ServiceSubscriberInterfa
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
+    }
+
+    public function getFunctions()
+    {
+        return [
+            new TwigFunction('upload_asset', [$this, 'getUploadAssetPath'])
+        ];
     }
 
     public function getFilters(): array
@@ -59,5 +67,10 @@ class AppExtension extends AbstractExtension implements ServiceSubscriberInterfa
     public static function getSubscribedServices()
     {
         return ['markdownHelper' => MarkdownHelper::class];
+    }
+
+    public function getUploadAssetPath(string $path): string
+    {
+
     }
 }

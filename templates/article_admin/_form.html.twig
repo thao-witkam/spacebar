@@ -1,6 +1,11 @@
 {{ form_start(articleForm) }}
     {{ form_row(articleForm.title) }}
-    {{ form_row(articleForm.content) }}
+    {{ form_row(articleForm.imageFile) }}
+    {{ form_row(articleForm.content, {
+        'attr': {
+            'rows': 8
+        }
+    }) }}
     {{ form_row(articleForm.publishedAt) }}
     {{ form_row(articleForm.author) }}
     {{ form_row(articleForm.location, {

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
+use App\Service\UploadHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -168,7 +169,7 @@ class Article
     }
 
     public function getImagePath(){
-        return 'images/'.$this->getImageFilename();
+        return UploadHelper::UPLOAD_IMAGE_PATH .$this->getImageFilename();
     }
 
     public function incrementHeartCount():self

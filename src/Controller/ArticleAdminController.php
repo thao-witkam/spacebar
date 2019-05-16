@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Form\ArticleFormType;
 use App\Repository\ArticleRepository;
+use App\Service\UploadHelper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,7 +26,7 @@ class ArticleAdminController extends AbstractController
         $form = $this->createForm(ArticleFormType::class);
 
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             /** @var Article $article */
             $article = $form->getData();
             $em->persist($article);
@@ -44,12 +46,19 @@ class ArticleAdminController extends AbstractController
      * @Route("/admin/article/{id}/edit", name="admin_article_edit")
      * @IsGranted("MANAGE", subject="article")
      */
-    public function edit(Article $article, Request $request, EntityManagerInterface $em)
+    public function edit(Article $article, Request $request, EntityManagerInterface $em, UploadHelper $uploadHelper)
     {
         $form = $this->createForm(ArticleFormType::class, $article);
 
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form['imageFile']->getData();
+            if ($imageFile) {
+                $newFileName = $uploadHelper->uploadArticleImage($imageFile);
+                $article->setImageFilename($newFileName);
+            }
+
             $em->persist($article);
             $em->flush();
 
@@ -73,12 +82,13 @@ class ArticleAdminController extends AbstractController
     /**
      * @Route("/admin/article/location-select", name="admin_article_select")
      */
-    public function getSpecificLocationSelect(Request $request){
+    public function getSpecificLocationSelect(Request $request)
+    {
         $article = new Article();
         $article->setLocation($request->query->get('location'));
         $form = $this->createForm(ArticleFormType::class, $article);
 
-        if(!$form->has('specificLocationName')){
+        if (!$form->has('specificLocationName')) {
             return new Response(null, 204);
         }
 
