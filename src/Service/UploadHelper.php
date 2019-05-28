@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use Gedmo\Sluggable\Util\Urlizer;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadHelper
@@ -19,7 +20,7 @@ class UploadHelper
     public function uploadArticleImage(UploadedFile $imageFile):string
     {
         $dir = $this->publicPath.self::UPLOAD_IMAGE_PATH;
-        $newFileName = uniqid().'_'.$imageFile->getClientOriginalName();
+        $newFileName = Urlizer::urlize(uniqid().'_'.$imageFile->getClientOriginalName());
         $imageFile->move($dir, $newFileName);
 
         return $newFileName;

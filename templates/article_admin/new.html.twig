@@ -2,7 +2,12 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('js/admin_article_form.js') }}"/>
+    {{ encore_entry_script_tags('admin_article_form') }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('admin_article_form') }}
 {% endblock %}
 
 

@@ -1,0 +1,61 @@
+@import "./helper/_variables.scss";
+
+/* ARTICLE SHOW PAGE */
+
+.show-article-container {
+  width: 100%;
+  background-color: #fff;
+}
+
+.show-article-img {
+  width: 250px;
+  height: auto;
+  border-radius: 5px;
+}
+
+.show-article-title {
+  font-size: 2em;
+}
+
+.like-article, .like-article:hover {
+  color: red;
+  text-decoration: none;
+}
+
+@media (max-width: 991px) {
+  .show-article-title {
+    font-size: 1.5em;
+  }
+
+  .show-article-title-container {
+    max-width: 220px;
+  }
+}
+
+.article-text {
+  margin-top: 20px;
+}
+
+.share-icons i {
+  font-size: 1.5em;
+}
+
+.comment-img {
+  width: 50px;
+  height: auto;
+  border: 1px solid darkgray;
+}
+
+.commenter-name {
+  font-weight: bold;
+}
+
+.comment-form {
+  min-width: 500px;
+}
+
+@media (max-width: 767px) {
+  .comment-form {
+    min-width: 260px;
+  }
+}
