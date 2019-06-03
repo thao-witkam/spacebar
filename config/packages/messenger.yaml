@@ -1,0 +1,9 @@
+framework:
+    messenger:
+        transports:
+            # Uncomment the following line to enable a transport named "amqp"
+          async: '%env(MESSENGER_TRANSPORT_DSN)%'
+
+        routing:
+            # Route your messages to the transports
+            'App\Message\SmsNotification': async
