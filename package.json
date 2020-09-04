@@ -9,7 +9,7 @@
         "font-awesome": "^4.7.0",
         "jquery": "^3.4.1",
         "js": "^0.1.0",
-        "node-sass": "^4.12.0",
+        "node-sass": "^4.13.1",
         "popper": "^1.0.1",
         "sass-loader": "7.0.1",
         "sortable": "^2.0.0",
